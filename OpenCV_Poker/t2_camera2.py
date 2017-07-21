@@ -19,14 +19,20 @@ import _thread, os
 from uf.wrapper.swift_api import SwiftAPI
 from uf.utils.log import *
 from time import sleep
+import random,string
+
+
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
 
 #
 arm_move = False
 
 logger_init(logging.INFO)
 
-def init_uarm():
 
+def init_uarm():
     print('setup swift ...')
     port = '/dev/' + [x for x in os.listdir('/dev/') if x.startswith('cu.usbmodem')][0]
     # port = '/dev/' + [x for x in os.listdir('/dev/') if x.startswith('ttyA')][0]
@@ -43,6 +49,8 @@ def init_uarm():
     #     sleep(0.1)
     swift.set_buzzer()
     return swift
+
+
 # swift=init_uarm()
 
 
@@ -56,7 +64,7 @@ def pick_place_poker(x, y):  #
     swift.set_position(x=x, y=y, z=165, speed=1800, wait=True)
     #
     # swift.set_position(x=207, y=-178, z=0, speed=1800, wait=True)
-    swift.set_position(x=x, y=y, z=0, speed=1800, wait=True)#TODO z=1
+    swift.set_position(x=x, y=y, z=0, speed=1800, wait=True)  # TODO z=1
     # 气泵
     swift.set_pump(on=True)
 
@@ -132,7 +140,7 @@ def draw_line_rectangle(frame):
     down_right2 = (int(cols / 2 * 7 / 8 + cols / 2), int(rows * 7 / 8))  # 右下点
     # print(up_left, down_right)
     cv2.rectangle(frame, up_left2, down_right2, (255, 0, 0), 3)
-    return up_left1,down_right1,up_left2,down_right2
+    return up_left1, down_right1, up_left2, down_right2
 
 
 # while (True):
@@ -141,11 +149,11 @@ while (cap.isOpened()):
     ret, frame = cap.read()
 
     # 划线
-    up_left1, down_right1, up_left2, down_right2=draw_line_rectangle(frame)
+    up_left1, down_right1, up_left2, down_right2 = draw_line_rectangle(frame)
 
     # ROI
     # frame2 = frame[80:560, 90:630]#
-    frame2 = frame[ up_left1[1]:down_right1[1],up_left1[0]:down_right1[0]]#
+    frame2 = frame[up_left1[1]:down_right1[1], up_left1[0]:down_right1[0]]  #
     # print(up_left1[0],down_right1[0], up_left1[1],down_right1[1])
     # cv2.imshow('frame2', frame2)
 
@@ -187,8 +195,9 @@ while (cap.isOpened()):
             min_y, max_y = min(y, min_y), max(y + h, max_y)
 
             if w > 80 or h > 80:
-                cv2.rectangle(frame2, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                # cv2.rectangle(frame2, (x, y), (x + w, y + h), (255, 0, 0), 2)
                 # print('rectangle:',x, y, w, h)#rectangle: 151 205 123 181
+                pass
             if arm_move is False:
                 if w > 100 and h > 140:  # TODO 识别出扑克牌
                     # 重心
@@ -200,13 +209,12 @@ while (cap.isOpened()):
                     # 找出中心点
                     mx = x + w / 2
                     my = y + h / 2
+                    print('中心:', mx, my)
                     # 多线程，发送到机械臂
                     # pick_place_poker(move=True)
 
                     arm_move = True
                     # _thread.start_new_thread(move_thread, (mx, my))
-
-
 
     # Display the resulting frame
     cv2.namedWindow('frame', cv2.WINDOW_AUTOSIZE)
@@ -217,7 +225,7 @@ while (cap.isOpened()):
     if key == ord("q"):
         break
     if key == ord('s'):
-        cv2.imwrite('t221.jpg', frame)#TODO 随机文件名
+        cv2.imwrite(id_generator()+'.jpg', frame2)  # TODO 随机文件名
 
 # When everything done, release the capture
 cap.release()
