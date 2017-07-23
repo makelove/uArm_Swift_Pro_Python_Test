@@ -64,7 +64,7 @@ def pick_place_poker(x, y):  #
     swift.set_position(x=x, y=y, z=165, speed=1800, wait=True)
     #
     # swift.set_position(x=207, y=-178, z=0, speed=1800, wait=True)
-    swift.set_position(x=x, y=y, z=0, speed=1800, wait=True)  # TODO z=1
+    swift.set_position(x=x, y=y, z=1, speed=1800, wait=True)  # TODO z=1
     # 气泵
     swift.set_pump(on=True)
 
