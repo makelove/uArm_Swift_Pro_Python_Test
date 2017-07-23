@@ -180,6 +180,8 @@ while (cap.isOpened()):
     min_x, min_y = width, height
     max_x = max_y = 0
 
+    #最大的contour
+
     # computes the bounding box for the contour, and draws it on the frame,
     for contour, hier in zip(contours, hierarchy):
 
