@@ -31,7 +31,8 @@ swift.set_position(230, 0, z=1, speed=1500,wait=True)
 # 气泵
 swift.set_pump(on=True)
 #升起
-swift.set_position(230, 0, 70, speed=1500,wait=True)
+# swift.set_position(230, 0, 70, speed=1500,wait=True)
+swift.set_position(230, 0, 2, speed=1500,wait=True)#原地旋转
 #旋转90度
 print('角度：',swift.get_servo_angle())#[90.09, 74.76, 39.27, 93.0]
 print('旋转90度')
