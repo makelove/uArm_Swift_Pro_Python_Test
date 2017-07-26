@@ -35,15 +35,18 @@ def draw_line_rectangle(frame, margin):
 
 
 ret, temp = cap.read()
+tm = 0
 while cap.isOpened():
     # Capture frame-by-frame
     ret, frame = cap.read()
     m = mse(cv2.cvtColor(temp, cv2.COLOR_BGR2GRAY), cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))
-    print('mse',m,'----\n')
-    if m < 150:
+    print('mse', m, '----\n')
+    # if m < 150:#静止画面，不用重复计算
+    if abs(m - tm) < 2:  # 静止画面，不用重复计算
         continue
     else:
-        temp=frame
+        temp = frame
+        tm = m
     #
     frame2 = frame[margin:frame.shape[0] - margin, margin:frame.shape[1] - margin]  #
 
