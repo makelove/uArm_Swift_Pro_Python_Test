@@ -17,13 +17,14 @@ cap = cv2.VideoCapture(0)
 # ret = cap.set(3, 640)
 # ret = cap.set(4, 480)
 
-def draw_line_rectangle(frame):
+margin = 40
+def draw_line_rectangle(frame,margin):
     rows, cols, ch = frame.shape  # (720, 1280, 3)
     half = int(cols / 2)
     # 中间
     cv2.line(frame, (half, 0), (half, rows), (0, 0, 255), 5)
 
-    margin = 40
+    # margin = 40
     # 左边
     up_left1 = (margin, margin)  # 左上点
     down_right1 = (cols - margin, rows - margin)  # 右下点
@@ -35,9 +36,16 @@ def draw_line_rectangle(frame):
 while cap.isOpened():
     # Capture frame-by-frame
     ret, frame = cap.read()
-    # img = cv2.imread('../data/sudoku.jpg')
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    frame2 = frame[margin:frame.shape[0] - margin, margin:frame.shape[1] - margin]  #
+
+    gray = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray, 50, 150, apertureSize=3)
+    image, contours, hierarchy = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours=[cnt for cnt in contours if cv2.contourArea(cnt)>200]#过滤太小的contour
+    print(len(contours))
+    # edges = cv2.drawContours(edges, contours, -1, (255, 255, 255), 3)
+    frame = cv2.drawContours(frame2, contours, -1, (0, 0, 255), 3)
+    cv2.imshow('edges',edges)
 
     minLineLength = 100
     maxLineGap = 10
@@ -51,7 +59,11 @@ while cap.isOpened():
         x1, y1, x2, y2 = line[0]
         cv2.line(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
-    draw_line_rectangle(frame)
+    #检测长方形
+
+
+
+    draw_line_rectangle(frame,margin)
     cv2.imshow("houghlines", frame)
 
     key = cv2.waitKey(1)
