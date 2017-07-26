@@ -10,6 +10,7 @@ lines.py:
 
 import cv2
 import numpy as np
+from skimage.measure import compare_mse as mse
 
 cap = cv2.VideoCapture(0)
 
@@ -33,10 +34,17 @@ def draw_line_rectangle(frame, margin):
     cv2.rectangle(frame, up_left1, down_right1, (0, 255, 0), 3)
 
 
-# while (True):
+ret, temp = cap.read()
 while cap.isOpened():
     # Capture frame-by-frame
     ret, frame = cap.read()
+    m = mse(cv2.cvtColor(temp, cv2.COLOR_BGR2GRAY), cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))
+    print('mse',m,'----\n')
+    if m < 150:
+        continue
+    else:
+        temp=frame
+    #
     frame2 = frame[margin:frame.shape[0] - margin, margin:frame.shape[1] - margin]  #
 
     gray = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
@@ -58,7 +66,7 @@ while cap.isOpened():
         if len(approx) == 4:
             (x, y, w, h) = cv2.boundingRect(contour)
             print(x, y, w, h)
-            cv2.rectangle(frame2, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            # cv2.rectangle(frame2, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
             # 画4条线
             cv2.line(frame, (x, y), (x, x + h), (255, 0, 0), 2)
