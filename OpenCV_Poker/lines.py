@@ -11,6 +11,7 @@ lines.py:
 import cv2
 import numpy as np
 from skimage.measure import compare_mse as mse
+from OpenCV_Poker.utils import id_generator
 
 cap = cv2.VideoCapture(0)
 
@@ -37,6 +38,13 @@ def draw_line_rectangle(frame, margin):
 ret, temp = cap.read()
 tm = 0
 while cap.isOpened():
+    key = cv2.waitKey(1)
+    if key == ord("q"):
+        break
+    if key == ord('s'):
+        cv2.imwrite(id_generator() + '.jpg', frame)
+
+
     # Capture frame-by-frame
     ret, frame = cap.read()
     m = mse(cv2.cvtColor(temp, cv2.COLOR_BGR2GRAY), cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))
@@ -48,7 +56,10 @@ while cap.isOpened():
         temp = frame
         tm = m
     #
-    frame2 = frame[margin:frame.shape[0] - margin, margin:frame.shape[1] - margin]  #
+    # print(margin,frame.shape[0] - margin, margin,frame.shape[1] - margin)#40 680 40 1240
+    frame2 = frame[margin:frame.shape[0] - margin, margin:frame.shape[1] - margin]#.copy()
+    # cv2.imshow('frame2', frame2)
+
 
     gray = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray, 50, 150, apertureSize=3)
@@ -57,7 +68,7 @@ while cap.isOpened():
     print(len(contours))
     # edges = cv2.drawContours(edges, contours, -1, (255, 255, 255), 3)
     frame = cv2.drawContours(frame2, contours, -1, (0, 0, 255), 3)
-    cv2.imshow('edges', edges)
+    # cv2.imshow('edges', edges)
 
     #
     for contour in contours:
@@ -95,10 +106,9 @@ while cap.isOpened():
 
     draw_line_rectangle(frame, margin)
     cv2.imshow("houghlines", frame)
+    # cv2.imwrite('frame3.jpg', frame[margin:frame.shape[0] - margin, margin:frame.shape[1] - margin])
 
-    key = cv2.waitKey(1)
-    if key == ord("q"):
-        break
+
 
 # When everything done, release the capture
 cap.release()

@@ -8,22 +8,18 @@
 t2_camera.py:
 """
 
-import numpy as np
+from time import sleep
+
 import cv2
-
-import _thread, os
-# import imutils
-# imutils.is_cv2()
-
+import os
+from uf.utils.log import *
 #
 from uf.wrapper.swift_api import SwiftAPI
-from uf.utils.log import *
-from time import sleep
-import random,string
 
+from OpenCV_Poker.utils import id_generator
 
-def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
+# import imutils
+# imutils.is_cv2()
 
 
 #
@@ -227,7 +223,7 @@ while (cap.isOpened()):
     if key == ord("q"):
         break
     if key == ord('s'):
-        cv2.imwrite(id_generator()+'.jpg', frame2)  # TODO 随机文件名
+        cv2.imwrite(id_generator() + '.jpg', frame2)
 
 # When everything done, release the capture
 cap.release()
