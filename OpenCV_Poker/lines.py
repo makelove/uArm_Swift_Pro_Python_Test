@@ -44,20 +44,19 @@ while cap.isOpened():
     if key == ord('s'):
         cv2.imwrite(id_generator() + '.jpg', frame)
 
-
     # Capture frame-by-frame
     ret, frame = cap.read()
     m = mse(cv2.cvtColor(temp, cv2.COLOR_BGR2GRAY), cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))
-    print('mse', m, '----\n')
+    # print('mse', m, '----\n')
     # if m < 150:#静止画面，不用重复计算
     if abs(m - tm) < 2:  # 静止画面，不用重复计算
         continue
     else:
-        temp = frame
+        temp = frame.copy()
         tm = m
     #
     # print(margin,frame.shape[0] - margin, margin,frame.shape[1] - margin)#40 680 40 1240
-    frame2 = frame[margin:frame.shape[0] - margin, margin:frame.shape[1] - margin]#.copy()
+    frame2 = frame[margin:frame.shape[0] - margin, margin:frame.shape[1] - margin]  # .copy()
     # cv2.imshow('frame2', frame2)
 
 
@@ -72,6 +71,11 @@ while cap.isOpened():
 
     #
     for contour in contours:
+
+        ellipse = cv2.fitEllipse(contour)
+        print('旋转角度：',ellipse[2])
+
+        # print('contour:',contour,'\n\n')
         #
         c = contour
         # print('边数：', len(c))
@@ -81,6 +85,7 @@ while cap.isOpened():
             (x, y, w, h) = cv2.boundingRect(contour)
             print(x, y, w, h)
             # cv2.rectangle(frame2, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            # cv2.imwrite(id_generator() + '.jpg', frame2[y:y + h, x:x + w])#需要取反
 
             # 画4条线
             cv2.line(frame, (x, y), (x, x + h), (255, 0, 0), 2)
@@ -107,8 +112,6 @@ while cap.isOpened():
     draw_line_rectangle(frame, margin)
     cv2.imshow("houghlines", frame)
     # cv2.imwrite('frame3.jpg', frame[margin:frame.shape[0] - margin, margin:frame.shape[1] - margin])
-
-
 
 # When everything done, release the capture
 cap.release()
