@@ -65,7 +65,9 @@ def pick_place_poker(x, y, angle):  #
     #
     # swift.set_position(x=207, y=-178, z=0, speed=1800, wait=True)
     swift.set_position(x=x, y=y, z=10, speed=1800, wait=True)  # TODO z=1
-    return
+    # return
+
+    '''
     # 气泵
     swift.set_pump(on=True)
 
@@ -92,6 +94,7 @@ def pick_place_poker(x, y, angle):  #
     # final，复位
     swift.set_position(x=60, y=0, z=40, speed=1800, wait=True)
     swift.set_buzzer()
+    '''
 
 
 def rotate_poker(x, y, angle):
@@ -133,11 +136,11 @@ def move_thread(mx, my, angle):
     try:
         # while True:
         #     sleep(1)
-        if arm_move is True:
-            x = my / 2 + 0
-            y = (mx - 640) / 2 + 60
+        if arm_move is True:#720, 1280
+            x = my
+            y = mx-1280
             print(mx, my, '-->', x, y)
-            pick_place_poker(x, y, angle)
+            # pick_place_poker(x, y, angle)
             # rotate_poker(x, y, angle)
 
     except KeyboardInterrupt as e:
@@ -148,7 +151,7 @@ def move_thread(mx, my, angle):
         # swift.set_buzzer()
 
         #
-        arm_move = False
+        # arm_move = False
 
         print('线程退出，机械臂复位')
 
@@ -260,15 +263,15 @@ while cap.isOpened():
 
     cimg = frame2
     if circles is not None:
-        print('len circles[0, :]',len(circles[0, :]))#有干扰，不止一个圆圈
-        for i in circles[0, :]:
-            # for i in circles[:]:
-            # draw the outer circle
-            cv2.circle(cimg, (i[0], i[1]), i[2], (0, 255, 0), 2)
-            # draw the center of the circle
-            cv2.circle(cimg, (i[0], i[1]), 2, (0, 0, 255), 3)
+        if arm_move is False:
+            print('len circles[0, :]', len(circles[0, :]))  # 有干扰，不止一个圆圈
+            for i in circles[0, :]:
+                # for i in circles[:]:
+                # draw the outer circle
+                cv2.circle(cimg, (i[0], i[1]), i[2], (0, 255, 0), 2)
+                # draw the center of the circle
+                cv2.circle(cimg, (i[0], i[1]), 2, (0, 0, 255), 3)
 
-            if arm_move is False:
                 arm_move = True
                 mx, my = i[0], i[1]
                 angle0 = 0

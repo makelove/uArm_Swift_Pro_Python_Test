@@ -131,7 +131,7 @@ def move_thread(mx, my, angle):
     try:
         # while True:
         #     sleep(1)
-        if arm_move is True:
+        if arm_move is True:#左边框
             x = my / 2 + 80
             y = (mx - 640) / 2 + 60
             print(mx, my, '-->', x, y)
