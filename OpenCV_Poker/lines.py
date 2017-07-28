@@ -72,8 +72,8 @@ while cap.isOpened():
     #
     for contour in contours:
 
-        ellipse = cv2.fitEllipse(contour)
-        print('旋转角度：',ellipse[2])
+        # ellipse = cv2.fitEllipse(contour)
+        # print('旋转角度：',ellipse[2])
 
         # print('contour:',contour,'\n\n')
         #
