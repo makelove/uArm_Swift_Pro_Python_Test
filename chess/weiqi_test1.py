@@ -136,22 +136,22 @@ def move_thread(mx, my, angle):
     try:
         # while True:
         #     sleep(1)
-        if arm_move is True:#720, 1280
-            x = my
-            y = mx-1280
+        if arm_move is True:  # 720, 1280
+            x = my / 2 + 20 + 53
+            y = mx - 1280 / 2 + 0
             print(mx, my, '-->', x, y)
-            # pick_place_poker(x, y, angle)
+            pick_place_poker(x, y, angle)
             # rotate_poker(x, y, angle)
 
     except KeyboardInterrupt as e:
         print('KeyboardInterrupt', e)
         # final，复位
     finally:
-        # swift.set_position(x=60, y=0, z=40, speed=1800, wait=True)
-        # swift.set_buzzer()
+        swift.set_position(x=60, y=0, z=40, speed=1800, wait=True)
+        swift.set_buzzer()
 
         #
-        # arm_move = False
+        arm_move = False
 
         print('线程退出，机械臂复位')
 
@@ -283,11 +283,10 @@ while cap.isOpened():
     cv2.imshow("houghlines", frame)
     # cv2.imwrite('frame3.jpg', frame[margin:frame.shape[0] - margin, margin:frame.shape[1] - margin])
 
-# When everything done, release the capture
-cap.release()
-cv2.destroyAllWindows()
-
-#
 # final，复位
 swift.set_position(x=60, y=10, z=40, speed=1800, wait=False)
 swift.set_buzzer()
+
+# When everything done, release the capture
+cap.release()
+cv2.destroyAllWindows()
