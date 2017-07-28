@@ -57,22 +57,32 @@ def pick_place_poker(x, y, angle):  #
 
     print('机械臂启动')
     swift.set_buzzer()
+    swift.set_wrist(angle=90, wait=True)
     # 中间位置，高点
     # swift.set_position(x=176, y=0, z=165, speed=1800, wait=True)
     swift.set_position(x=x, y=y, z=165, speed=1800, wait=True)
     #
     # swift.set_position(x=207, y=-178, z=0, speed=1800, wait=True)
-    swift.set_position(x=x, y=y, z=1, speed=1800, wait=True)  # TODO z=1
+    swift.set_position(x=x, y=y, z=2, speed=1800, wait=True)  # TODO z=1
     # 气泵
     swift.set_pump(on=True)
 
     # 中间位置，高点
     # swift.set_position(x=176, y=0, z=165, speed=1800, wait=True)
     swift.set_position(x=x, y=0, z=165, speed=1800, wait=True)
-    ret = swift.set_wrist(angle=abs(90 - angle), wait=True)
-    print('角度：', swift.get_servo_angle(), ret)  #
 
-    swift.set_position(x=220, y=135, z=30, speed=1800, wait=True)
+    swift.set_position(x=220, y=135, z=15, speed=1800, wait=True)
+    sleep(1)
+    angle0 = swift.get_servo_angle()[-1]
+    print('现在角度:', angle0)
+    # ret = swift.set_wrist(angle=abs(angle), wait=True)
+    # ret = swift.set_wrist(angle=abs(angle-90), wait=True)
+    # ret = swift.set_wrist(angle=abs(180), wait=True)
+    # ret = swift.set_wrist(angle=abs(90 + angle), wait=True)
+    # ret = swift.set_wrist(angle=abs(180 + angle), wait=True)
+    ret = swift.set_wrist(angle=abs(angle0 + 90 - angle) + 90, wait=True)
+    print('角度：', swift.get_servo_angle(), ret)  #
+    sleep(1)
     # 气泵，释放扑克
     swift.set_pump(on=False)
     sleep(2)
