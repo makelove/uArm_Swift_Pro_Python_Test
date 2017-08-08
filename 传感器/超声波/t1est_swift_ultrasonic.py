@@ -1,22 +1,10 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2017/8/8 10:41
-# @Author  : play4fun
-# @File    : 检测扑克牌是否被吸住.py
-# @Software: PyCharm
-
-"""
-检测扑克牌是否被吸住.py:
-
-指定坐标
-z=0，气泵吸起扑克牌
-z=50 机械臂升起
-超声波检测到扑克牌的距离
-气泵放气，扔掉扑克牌
-超声波检测到扑克牌的距离
-打印 '扑克牌被丢掉，重来'
-"""
-
-#TODO
+#!/usr/bin/env python3
+# Software License Agreement (BSD License)
+#
+# Copyright (c) 2017, UFactory, Inc.
+# All rights reserved.
+#
+# Author: Duke Fong <duke@ufactory.cc>
 
 
 import sys, os
@@ -46,8 +34,14 @@ print(swift.get_device_info())
 # print('\nset X350 Y0 Z50 F500 ...')
 # swift.set_position(350, 0, 50, speed=1500)
 
+# print('set X340 ...')
+# swift.set_position(x=340)
+# print('set X320 ...')
+# swift.set_position(x=320)
+# print('set X300 ...')
+# swift.set_position(x=300)
 print('set X200 ...')
-swift.set_position(x=200,y=0)
+swift.set_position(x=200)
 print('set X190 ...')
 swift.set_position(x=170)
 
@@ -65,11 +59,11 @@ print('ultrasonic auto report...')
 
 def ultrasonic_report_cb(value):
     z=swift.get_position()[-1]
-    print('ultrasonic report value: {}'.format(value),'\t','Z:',z)
+    print('ultrasonic report value: {}'.format(value),'Z:',z)
 
 
 swift.register_ultrasonic_callback(ultrasonic_report_cb)
-swift.set_report_ultrasonic(400)  # microsecond
+swift.set_report_ultrasonic(100)  # microsecond
 sleep(1)
 
 print('\nultrasonic check value...')
@@ -78,12 +72,6 @@ print('set Z100 ...')
 swift.set_position(z=0, wait=True)
 print('distance: {}'.format(swift.get_ultrasonic()))
 sleep(1)
-
-#气泵
-swift.set_pump(on=True)
-print('吸起 扑克牌')
-
-#超声波的距离将保持为1
 swift.set_position(z=5, wait=True)
 print('distance: {}'.format(swift.get_ultrasonic()))
 sleep(1)
@@ -96,10 +84,6 @@ sleep(1)
 swift.set_position(z=50, wait=True)
 print('distance: {}'.format(swift.get_ultrasonic()))
 sleep(1)
-#气泵
-swift.set_pump(on=False)
-print('放气 扑克牌')
-
 swift.set_position(z=70, wait=True)
 print('distance: {}'.format(swift.get_ultrasonic()))
 sleep(1)
@@ -131,53 +115,3 @@ except KeyboardInterrupt as e:
 finally:
     # print('ret5: ' + test_ports['swift_service']['handle'].call('set cmd_sync G0 X80 Y0 Z60'))
     swift.set_position(x=100, y=0, z=60, speed=1800, wait=True)
-
-'''
-ultrasonic check value...
-set Z100 ...
-distance: 3
-ultrasonic report value: 0 	 Z: 0.0
-ultrasonic report value: 1 	 Z: 0.0
-ultrasonic report value: 1 	 Z: 0.0
-DEBUG: swift/pump: set value: on
-ultrasonic report value: 1 	 Z: 0.0
-ultrasonic report value: 1 	 Z: 0.0
-ultrasonic report value: 1 	 Z: 0.0
-吸起 扑克牌
-distance: 1
-ultrasonic report value: 1 	 Z: 5.0
-ultrasonic report value: 1 	 Z: 5.0
-ultrasonic report value: 1 	 Z: 5.0
-distance: 1
-ultrasonic report value: 0 	 Z: 10.0
-ultrasonic report value: 1 	 Z: 10.0
-ultrasonic report value: 1 	 Z: 10.0
-distance: 1
-ultrasonic report value: 1 	 Z: 30.0
-ultrasonic report value: 1 	 Z: 30.0
-ultrasonic report value: 1 	 Z: 30.0
-distance: 1
-ultrasonic report value: 0 	 Z: 50.0
-ultrasonic report value: 1 	 Z: 50.0
-ultrasonic report value: 1 	 Z: 50.0
-DEBUG: swift/pump: set value: off
-放气 扑克牌
-distance: 1
-ultrasonic report value: 5 	 Z: 70.0
-ultrasonic report value: 6 	 Z: 70.0
-ultrasonic report value: 6 	 Z: 70.0
-distance: 6
-ultrasonic report value: 8 	 Z: 100.0
-ultrasonic report value: 9 	 Z: 100.0
-ultrasonic report value: 9 	 Z: 100.0
-distance: 9
-ultrasonic report value: 9 	 Z: 120.0
-ultrasonic report value: 11 	 Z: 120.0
-ultrasonic report value: 11 	 Z: 120.0
-set Z150 ...
-distance: 11
-done ...
-distance: 11
-distance: 14
-KeyboardInterrupt 
-'''
