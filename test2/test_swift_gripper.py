@@ -7,8 +7,6 @@
 # Author: Duke Fong <duke@ufactory.cc>
 
 
-import _thread, threading
-import serial
 import sys, os
 from time import sleep
 
@@ -23,27 +21,27 @@ logger_init(logging.DEBUG)
 print('setup swift ...')
 
 swift_iomap = {
-        'pos_in': '/swift_pos_in',
-        'service': '/swift_service',
-        'gripper': '/swift_gripper'
+        'pos_in':  'swift_pos_in',
+        'service': 'swift_service',
+        'gripper': 'swift_gripper'
 }
 
 ufc = ufc_init()
-swift = Swift(ufc, 'swift', swift_iomap, dev_port = '/dev/ttyACM0', baud = 115200)
+swift = Swift(ufc, 'swift', swift_iomap)
 
 
 print('setup test ...')
 
 test_ports = {
-        'swift_pos': {'dir': 'out', 'type': 'topic'},
+        'swift_pos':     {'dir': 'out', 'type': 'topic'},
         'swift_service': {'dir': 'out', 'type': 'service'},
         'swift_gripper': {'dir': 'out', 'type': 'service'}
 }
 
 test_iomap = {
-        'swift_pos': '/swift_pos_in',
-        'swift_service': '/swift_service',
-        'swift_gripper': '/swift_gripper'
+        'swift_pos':     'swift_pos_in',
+        'swift_service': 'swift_service',
+        'swift_gripper': 'swift_gripper'
 }
 
 # install handle for ports which are listed in the iomap
@@ -64,6 +62,13 @@ print('gripper set off return: ' + test_ports['swift_gripper']['handle'].call('s
 print('gripper get state return: ' + test_ports['swift_gripper']['handle'].call('get value'))
 
 print('done ...')
-while True:
-    sleep(1)
+try:
+    while True:
+        sleep(1)
+except KeyboardInterrupt as e:
+    print('KeyboardInterrupt', e)
+finally:
+    print('ret5: ' + test_ports['swift_service']['handle'].call('set cmd_sync G0 X80 Y0 Z60'))
+    # swift.set_position(x=80, y=0, z=60, speed=1800, wait=True)
+
 
