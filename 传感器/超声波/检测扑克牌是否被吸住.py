@@ -117,9 +117,6 @@ swift.set_buzzer()
 
 swift.register_ultrasonic_callback(None)
 
-# while True:
-#     print('distance: {}'.format(swift.get_ultrasonic()))
-#     sleep(1)
 
 print('done ...')
 try:
@@ -129,7 +126,6 @@ try:
 except KeyboardInterrupt as e:
     print('KeyboardInterrupt', e)
 finally:
-    # print('ret5: ' + test_ports['swift_service']['handle'].call('set cmd_sync G0 X80 Y0 Z60'))
     swift.set_position(x=100, y=0, z=60, speed=1800, wait=True)
 
 '''
