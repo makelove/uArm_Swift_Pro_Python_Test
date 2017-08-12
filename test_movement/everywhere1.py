@@ -31,7 +31,7 @@ print(swift.get_device_info())
 # TODO 新建多线程，在后台监控位置，每隔1秒，打印一次
 fvalues = swift.get_position()
 print('现在位置：', fvalues)  # [104.29, 13.51, 36.49]#原点
-polar = swift.get_polar()
+polar = swift.get_polar()#球坐标系（Spherical coordinate system）
 print('极点：', polar)  # [355.11, 122.35, 42.17]
 # xp,yp,zp=polar
 xp, yp, zp = [355.11, 122.35, 42.17]
