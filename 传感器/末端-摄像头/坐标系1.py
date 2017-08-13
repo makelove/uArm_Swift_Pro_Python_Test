@@ -46,8 +46,9 @@ def draw_line_rectangle(frame, margin, polar):
     half_h = int(rows / 2)
     # 中间,竖线
     cv2.line(frame, (half_v, 0), (half_v, rows), (0, 0, 255), 3)
-    cv2.line(frame, (half_v - 10, 0), (half_v - 10, rows), (0, 255, 0), 1)
-    cv2.line(frame, (half_v + 10, 0), (half_v + 10, rows), (0, 255, 0), 1)
+    m1 = 20
+    cv2.line(frame, (half_v - m1, 0), (half_v - m1, rows), (0, 255, 0), 1)
+    cv2.line(frame, (half_v + m1, 0), (half_v + m1, rows), (0, 255, 0), 1)
     # 横线
     cv2.line(frame, (0, half_h), (cols, half_h), (0, 0, 255), 4)
 
