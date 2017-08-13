@@ -29,10 +29,10 @@ print(swift.get_device_info())
 sleep(4)
 
 # 上升到最高点
-swift.set_position(x=152, y=0, speed=1800, wait=True)
-sleep(1)
-swift.set_position(x=152, y=81, z=148, speed=1800, wait=True)
-sleep(1)
+swift.set_position(x=152, y=0, speed=1800, wait=False)
+# sleep(1)
+swift.set_position(x=152, y=81, z=148, speed=1800, wait=False)
+# sleep(1)
 
 #
 cap = cv2.VideoCapture(0)
@@ -45,9 +45,9 @@ def draw_line_rectangle(frame, margin, polar):
     half_v = int(cols / 2)
     half_h = int(rows / 2)
     # 中间,竖线
-    cv2.line(frame, (half_v, 0), (half_v, rows), (0, 0, 255), 5)
-    cv2.line(frame, (half_v - 10, 0), (half_v - 10, rows), (0, 255, 0), 3)
-    cv2.line(frame, (half_v + 10, 0), (half_v + 10, rows), (0, 255, 0), 3)
+    cv2.line(frame, (half_v, 0), (half_v, rows), (0, 0, 255), 3)
+    cv2.line(frame, (half_v - 10, 0), (half_v - 10, rows), (0, 255, 0), 1)
+    cv2.line(frame, (half_v + 10, 0), (half_v + 10, rows), (0, 255, 0), 1)
     # 横线
     cv2.line(frame, (0, half_h), (cols, half_h), (0, 0, 255), 4)
 
@@ -69,7 +69,9 @@ def move_thread(x, y, z, speed, wait=False):
     swift.set_buzzer()
     global is_moving
     is_moving = True
-    swift.set_position(x=x, y=y, z=z, speed=1000, wait=True)
+    ret = swift.set_position(x=x, y=y, z=z, speed=1000, wait=True)
+    if ret is False:
+        raise Exception(f'set_position错误x{x}y{y}z{z}')
     # sleep(2)
     is_moving = False
     print('完成 move_thread')
@@ -85,8 +87,7 @@ def is_move():
 
 ret, frame = cap.read()
 cv2.imshow('frame', frame)
-cv2.waitKey(0)
-
+cv2.waitKey(1000)
 
 postive = False
 margin = 40
