@@ -40,7 +40,7 @@ cap = cv2.VideoCapture(0)
 
 # 画线
 def draw_line_rectangle(frame, margin, polar):
-    # print('polar:', polar)
+    print('polar:', polar, '倾斜角度', polar[-1])
     rows, cols, ch = frame.shape  # (720, 1280, 3)
     half_v = int(cols / 2)
     half_h = int(rows / 2)
@@ -70,6 +70,7 @@ def move_thread(x, y, z, speed, wait=False):
     swift.set_buzzer()
     global is_moving
     is_moving = True
+    # swift.set_position(x=x, y=y, z=z, speed=1000, wait=True)
     ret = swift.set_position(x=x, y=y, z=z, speed=1000, wait=True)
     if ret is False:
         raise Exception(f'set_position错误x{x}y{y}z{z}')
@@ -85,7 +86,15 @@ def is_move():
     print('移动？', move)
     is_moving = True if move is True else False
 
+polar=[0,0,0]
+def get_polar():
+    global polar
+    polar = swift.get_polar()
+    print('thread get_polar',polar)
 
+
+
+print('imshow')
 ret, frame = cap.read()
 cv2.imshow('frame', frame)
 cv2.waitKey(1000)
@@ -93,12 +102,13 @@ cv2.waitKey(1000)
 postive = False
 margin = 40
 while cap.isOpened():
+    print('waitKey(50)')
     key = cv2.waitKey(50)
     if key == ord("q"):
         break
     # _thread.start_new_thread(is_move, ())
 
-    # if not swift.get_is_moving():
+    # if not swift.get_is_moving():#阻塞线程
     if is_moving is False:
         is_moving = True
         if postive is False:
@@ -132,9 +142,10 @@ while cap.isOpened():
             # draw the center of the circle
             cv2.circle(frame, (i[0], i[1]), 2, (0, 0, 255), 3)
 
-    # 极坐标
+    # 极坐标 #阻碍？
     # polar = swift.get_polar()
-    polar = 0
+    _thread.start_new_thread(get_polar, ())
+    # polar = [1, 2, 3]
     draw_line_rectangle(frame, margin, polar)
     cv2.imshow('frame', frame)
 
