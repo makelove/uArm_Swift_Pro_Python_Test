@@ -85,6 +85,11 @@ def is_move():
     move = swift.get_is_moving()
     print('移动？', move)
     is_moving = True if move is True else False
+    return is_moving
+
+
+if is_move() is False:#不移动时，获取极坐标
+    polar = swift.get_polar()
 
 polar=[0,0,0]
 def get_polar():
