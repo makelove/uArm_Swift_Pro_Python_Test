@@ -26,7 +26,7 @@ class Swift(SwiftAPI):
         self.swift = SwiftAPI()
         self.position = {'x': 0, 'y': 0, 'z': 0}
         # self.position = self.get_position()
-        self.polar = {'x': 0, 'y': 0, 'z': 0}
+        self.polar = {'rotation': 0, 'stretch': 0, 'height': 0}
         # self.polar = self.get_polar()
         self.destination = {}
         self.step = step
@@ -47,16 +47,18 @@ class Swift(SwiftAPI):
     def get_position(self):
         position = self.swift.get_position()
         if position is None:
+            print(position is None)
             return self.position
         position = {'x': position[0], 'y': position[1], 'z': position[2]}
         self.position = position
         return position
 
-    def get_polar(self):
+    def get_polar(self):  # rotation, stretch, height
         polar = self.swift.get_polar()
         if polar is None:
+            print('polar is None')
             return self.polar
-        polar = {'x': polar[0], 'y': polar[1], 'z': polar[2]}
+        polar = {'rotation': polar[0], 'stretch': polar[1], 'height': polar[2]}
         self.polar = polar
         return polar
 
@@ -67,6 +69,8 @@ class Swift(SwiftAPI):
                 return a1
             else:
                 return a2
+
+        self.get_position()
 
         if wait is False:
             # 新建一个线程，set_position

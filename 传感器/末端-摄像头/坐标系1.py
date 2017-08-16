@@ -14,7 +14,6 @@ from time import sleep
 import _thread, os
 from swift_utils import Swift
 
-
 # from uf.wrapper.swift_api import SwiftAPI
 # from uf.utils.log import *
 #
@@ -44,7 +43,7 @@ cap = cv2.VideoCapture(0)
 
 # 画线
 def draw_line_rectangle(frame, margin, polar):
-    print('polar:rotation, stretch, height', polar, '倾斜角度', polar[0])
+    print('polar:rotation, stretch, height', polar, '倾斜角度', polar['rotation'])
     rows, cols, ch = frame.shape  # (720, 1280, 3)
     half_v = int(cols / 2)
     half_h = int(rows / 2)
@@ -95,12 +94,13 @@ def is_move():
 # if is_move() is False:#不移动时，获取极坐标
 #     polar = swift.get_polar()
 
-polar=[0,0,0]
+polar = [0, 0, 0]
+
+
 def get_polar():
     global polar
     polar = swift.get_polar()
-    print('thread get_polar',polar)
-
+    print('thread get_polar', polar)
 
 
 print('imshow')
@@ -117,18 +117,18 @@ while cap.isOpened():
         break
     # _thread.start_new_thread(is_move, ())
 
-    if not swift.get_is_moving2():#阻塞线程
-    # if is_moving is False:
+    if not swift.get_is_moving2():  # 阻塞线程
+        # if is_moving is False:
         is_moving = True
         if postive is False:
             print('-71')
-            swift.set_position(x=172, y=-71, z=148, speed=1800,wait=False)
+            swift.set_position(x=132, y=-71, z=118, speed=1800, wait=False)
             # _thread.start_new_thread(move_thread, (132, -71, 118, 1800, True))
             postive = True
 
         else:
             print('71')
-            swift.set_position(x=172, y=-71, z=148, speed=1800, wait=False)
+            swift.set_position(x=132, y=71, z=108, speed=1800, wait=False)
             # _thread.start_new_thread(move_thread, (92, 50, 158, 1800, True))
             # _thread.start_new_thread(move_thread, (132, 71, 108, 1800, True))
             postive = False
