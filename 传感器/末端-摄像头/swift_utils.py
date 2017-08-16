@@ -30,9 +30,16 @@ class Swift(SwiftAPI):
         # self.polar = self.get_polar()
         self.destination = {}
         self.step = step
+        self.is_moving = False
 
     def set_buzzer(self):
         self.swift.set_buzzer()
+
+    def get_is_moving(self):
+        self.swift.get_is_moving()
+
+    def get_is_moving2(self):
+        return self.is_moving
 
     def get_device_info(self):
         self.swift.get_device_info()
@@ -68,6 +75,7 @@ class Swift(SwiftAPI):
             _thread.start_new_thread(self.set_position, (x, y, z, speed, relative, True))
 
         else:
+            self.is_moving = True
             d = {'x': x, 'y': y, 'z': z}
             d2 = {k: v if v is not None else self.position[k] for k, v in d.items()}
             self.destination = d2
@@ -99,6 +107,7 @@ class Swift(SwiftAPI):
                 else:
                     raise Exception('set_position Error')
             self.swift.set_position(x=self.destination['x'], y=self.destination['y'], z=self.destination['z'], wait=True)
+            self.is_moving = False
             print('destination:', self.destination, self.position, x2, y2, z2)
             return True
 
