@@ -12,16 +12,20 @@ import cv2
 import numpy as np
 from time import sleep
 import _thread, os
+from .swift_utils import Swift
 
-from uf.wrapper.swift_api import SwiftAPI
-from uf.utils.log import *
 
-logger_init(logging.VERBOSE)
+# from uf.wrapper.swift_api import SwiftAPI
+# from uf.utils.log import *
+#
+# logger_init(logging.VERBOSE)
 # logger_init(logging.DEBUG)
 # logger_init(logging.INFO)
 
+
 print('setup swift ...')
-swift = SwiftAPI()  # default by filters: {'hwid': 'USB VID:PID=2341:0042'}
+# swift = SwiftAPI()  # default by filters: {'hwid': 'USB VID:PID=2341:0042'}
+swift = Swift()
 print('sleep 2 sec ...')
 sleep(2)
 print('device info: ')
