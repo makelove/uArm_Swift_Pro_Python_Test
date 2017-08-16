@@ -12,7 +12,7 @@ import cv2
 import numpy as np
 from time import sleep
 import _thread, os
-from .swift_utils import Swift
+from swift_utils import Swift
 
 
 # from uf.wrapper.swift_api import SwiftAPI
@@ -33,10 +33,10 @@ print(swift.get_device_info())
 sleep(4)
 
 # 上升到最高点
-swift.set_position(x=152, y=0, speed=1800, wait=False)
-# sleep(1)
-swift.set_position(x=152, y=81, z=148, speed=1800, wait=False)
-# sleep(1)
+swift.set_position(x=152, y=0, speed=1800, wait=True)
+sleep(3)
+swift.set_position(x=152, y=81, z=148, speed=1800, wait=True)
+sleep(5)
 
 #
 cap = cv2.VideoCapture(0)
@@ -44,7 +44,7 @@ cap = cv2.VideoCapture(0)
 
 # 画线
 def draw_line_rectangle(frame, margin, polar):
-    print('polar:', polar, '倾斜角度', polar[-1])
+    print('polar:rotation, stretch, height', polar, '倾斜角度', polar[0])
     rows, cols, ch = frame.shape  # (720, 1280, 3)
     half_v = int(cols / 2)
     half_h = int(rows / 2)
@@ -92,8 +92,8 @@ def is_move():
     return is_moving
 
 
-if is_move() is False:#不移动时，获取极坐标
-    polar = swift.get_polar()
+# if is_move() is False:#不移动时，获取极坐标
+#     polar = swift.get_polar()
 
 polar=[0,0,0]
 def get_polar():
@@ -153,7 +153,8 @@ while cap.isOpened():
 
     # 极坐标 #阻碍？
     # polar = swift.get_polar()
-    _thread.start_new_thread(get_polar, ())
+    polar = swift.polar
+    # _thread.start_new_thread(get_polar, ())
     # polar = [1, 2, 3]
     draw_line_rectangle(frame, margin, polar)
     cv2.imshow('frame', frame)

@@ -31,6 +31,9 @@ class Swift(SwiftAPI):
         self.destination = {}
         self.step = step
 
+    def set_buzzer(self):
+        self.swift.set_buzzer()
+
     def get_device_info(self):
         self.swift.get_device_info()
 
@@ -62,7 +65,7 @@ class Swift(SwiftAPI):
             # 新建一个线程，set_position
             # self.swift.set_position(x=x,y=y,z=z,speed=speed,relative=relative,wait=wait)
             print('新建一个线程')
-            _thread.start_new_thread(self.set_position, (x, y, z, speed, relative, wait))
+            _thread.start_new_thread(self.set_position, (x, y, z, speed, relative, True))
 
         else:
             d = {'x': x, 'y': y, 'z': z}
