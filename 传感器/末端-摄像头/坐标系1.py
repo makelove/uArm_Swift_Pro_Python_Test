@@ -35,15 +35,16 @@ sleep(4)
 swift.set_position(x=152, y=0, speed=1800, wait=True)
 sleep(3)
 swift.set_position(x=152, y=81, z=148, speed=1800, wait=True)
-sleep(5)
+sleep(3)
 
 #
 cap = cv2.VideoCapture(0)
 
 
 # 画线
-def draw_line_rectangle(frame, margin, polar):
+def draw_line_rectangle(frame, margin, polar,position):#TODO 自己计算斜率，x/y
     print('polar:rotation, stretch, height', polar, '倾斜角度', polar['rotation'])
+    print('position',position,position['x']/position['y'],position['y']/position['x'])
     rows, cols, ch = frame.shape  # (720, 1280, 3)
     half_v = int(cols / 2)
     half_h = int(rows / 2)
@@ -122,7 +123,7 @@ while cap.isOpened():
         is_moving = True
         if postive is False:
             print('-71')
-            swift.set_position(x=132, y=-71, z=118, speed=1800, wait=False)
+            swift.set_position(x=102, y=-71, z=118, speed=1800, wait=False)
             # _thread.start_new_thread(move_thread, (132, -71, 118, 1800, True))
             postive = True
 
@@ -154,9 +155,10 @@ while cap.isOpened():
     # 极坐标 #阻碍？
     # polar = swift.get_polar()
     polar = swift.polar
+    position=swift.position
     # _thread.start_new_thread(get_polar, ())
     # polar = [1, 2, 3]
-    draw_line_rectangle(frame, margin, polar)
+    draw_line_rectangle(frame, margin, polar,position)
     cv2.imshow('frame', frame)
 
 cv2.destroyAllWindows()

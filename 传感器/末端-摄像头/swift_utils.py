@@ -22,7 +22,11 @@ class Swift(SwiftAPI):
     自定义
     '''
 
-    def __init__(self, step=1):
+    def __init__(self, step=1, **kwargs):
+        '''
+        '''
+        super().__init__(**kwargs)
+
         self.swift = SwiftAPI()
         self.position = {'x': 0, 'y': 0, 'z': 0}
         # self.position = self.get_position()
