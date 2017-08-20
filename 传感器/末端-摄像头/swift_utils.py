@@ -26,8 +26,9 @@ class Swift(SwiftAPI):
         '''
         '''
         super().__init__(**kwargs)
+        # super(SwiftAPI,self).__init__(**kwargs)
 
-        self.swift = SwiftAPI()
+        # self.swift = SwiftAPI()
         self.position = {'x': 0, 'y': 0, 'z': 0}
         # self.position = self.get_position()
         self.polar = {'rotation': 0, 'stretch': 0, 'height': 0}
@@ -36,20 +37,20 @@ class Swift(SwiftAPI):
         self.step = step
         self.is_moving = False
 
-    def set_buzzer(self):
-        self.swift.set_buzzer()
+    # def set_buzzer(self):
+    #     self.swift.set_buzzer()
 
-    def get_is_moving(self):
-        self.swift.get_is_moving()
+    # def get_is_moving(self):
+    #     self.swift.get_is_moving()
 
     def get_is_moving2(self):
         return self.is_moving
 
-    def get_device_info(self):
-        self.swift.get_device_info()
+    # def get_device_info(self):
+    #     self.swift.get_device_info()
 
     def get_position(self):
-        position = self.swift.get_position()
+        position = super().get_position()
         if position is None:
             print(position is None)
             return self.position
@@ -58,7 +59,7 @@ class Swift(SwiftAPI):
         return position
 
     def get_polar(self):  # rotation, stretch, height
-        polar = self.swift.get_polar()
+        polar = super().get_polar()
         if polar is None:
             print('polar is None')
             return self.polar
@@ -106,7 +107,7 @@ class Swift(SwiftAPI):
                 z2 = self.position['z'] + z1 / steps
                 z2 = choose(z2, self.destination['z'], z1)
 
-                ret = self.swift.set_position(x=x2, y=y2, z=z2, wait=True)
+                ret = super().set_position(x=x2, y=y2, z=z2, wait=True)
                 if ret is True:
                     self.position = self.get_position()
                     self.polar = self.get_polar()
@@ -114,17 +115,17 @@ class Swift(SwiftAPI):
 
                 else:
                     raise Exception('set_position Error')
-            self.swift.set_position(x=self.destination['x'], y=self.destination['y'], z=self.destination['z'], wait=True)
+            super().set_position(x=self.destination['x'], y=self.destination['y'], z=self.destination['z'], wait=True)
             self.is_moving = False
             print('destination:', self.destination, self.position, x2, y2, z2)
             return True
-
+'''
     def reset1(self):
         x = 103
         y = 0
         z = 42
         speed = 400
-        self.reset(x, y, z, speed)
+        super().reset(x, y, z, speed)
 
     def reset(self, x, y, z, speed):
         # self.swift.reset()
@@ -135,3 +136,4 @@ class Swift(SwiftAPI):
         self.set_pump(False)
         self.set_gripper(False)
         self.set_wrist(90)  # 指向，方向
+'''

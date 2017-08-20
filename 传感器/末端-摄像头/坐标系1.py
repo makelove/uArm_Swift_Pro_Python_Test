@@ -15,11 +15,11 @@ import _thread, os
 from swift_utils import Swift
 
 # from uf.wrapper.swift_api import SwiftAPI
-# from uf.utils.log import *
+from uf.utils.log import *
 #
 # logger_init(logging.VERBOSE)
 # logger_init(logging.DEBUG)
-# logger_init(logging.INFO)
+logger_init(logging.INFO)
 
 
 print('setup swift ...')
@@ -33,18 +33,18 @@ sleep(4)
 
 # 上升到最高点
 swift.set_position(x=152, y=0, speed=1800, wait=True)
-sleep(3)
+sleep(2)
 swift.set_position(x=152, y=81, z=148, speed=1800, wait=True)
-sleep(3)
+sleep(2)
 
 #
 cap = cv2.VideoCapture(0)
 
 
 # 画线
-def draw_line_rectangle(frame, margin, polar,position):#TODO 自己计算斜率，x/y
+def draw_line_rectangle(frame, margin, polar, position):  # TODO 自己计算斜率，x/y
     print('polar:rotation, stretch, height', polar, '倾斜角度', polar['rotation'])
-    print('position',position,position['x']/position['y'],position['y']/position['x'])
+    print('position', position, position['x'] / position['y'], position['y'] / position['x'])
     rows, cols, ch = frame.shape  # (720, 1280, 3)
     half_v = int(cols / 2)
     half_h = int(rows / 2)
@@ -155,14 +155,17 @@ while cap.isOpened():
     # 极坐标 #阻碍？
     # polar = swift.get_polar()
     polar = swift.polar
-    position=swift.position
+    position = swift.position
     # _thread.start_new_thread(get_polar, ())
     # polar = [1, 2, 3]
-    draw_line_rectangle(frame, margin, polar,position)
+    draw_line_rectangle(frame, margin, polar, position)
     cv2.imshow('frame', frame)
 
 cv2.destroyAllWindows()
 
 # 重置
-swift.set_position(z=80, wait=True)
-swift.set_position(x=103, y=0, z=42, wait=True)
+# swift.set_position(z=80, wait=True)
+# swift.set_position(x=103, y=0, z=42, wait=True)
+print('重置机械臂')
+swift.set_buzzer()
+swift.reset(x=103, y=0, z=42, speed=800)
