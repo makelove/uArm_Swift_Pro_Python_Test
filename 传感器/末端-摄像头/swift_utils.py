@@ -14,7 +14,7 @@ from math import ceil
 from time import sleep
 
 # logger_init(logging.VERBOSE)
-logger_init(logging.INFO)
+# logger_init(logging.INFO)
 
 
 class Swift(SwiftAPI):

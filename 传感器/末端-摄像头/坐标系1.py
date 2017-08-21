@@ -15,12 +15,18 @@ import _thread, os
 from swift_utils import Swift
 
 # from uf.wrapper.swift_api import SwiftAPI
+import logging
+import logging.handlers
+
 from uf.utils.log import *
+
 #
+# logging.VERBOSE = 5
 logger_init(logging.VERBOSE)
 # logger_init(logging.DEBUG)
 # logger_init(logging.INFO)
-
+# logging.basicConfig(filename='example.log')
+# logging.basicConfig(filename='example.log',level=logging.VERBOSE)
 
 print('setup swift ...')
 # swift = SwiftAPI()  # default by filters: {'hwid': 'USB VID:PID=2341:0042'}
