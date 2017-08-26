@@ -12,9 +12,9 @@ import cv2
 import numpy as np
 from time import sleep
 import _thread, os
-from swift_utils import Swift
+# from swift_utils import Swift
 
-# from uf.wrapper.swift_api import SwiftAPI
+from uf.wrapper.swift_api import SwiftAPI
 import logging
 import logging.handlers
 
@@ -29,8 +29,8 @@ logger_init(logging.VERBOSE)
 # logging.basicConfig(filename='example.log',level=logging.VERBOSE)
 
 print('setup swift ...')
-# swift = SwiftAPI()  # default by filters: {'hwid': 'USB VID:PID=2341:0042'}
-swift = Swift()
+swift = SwiftAPI()  # default by filters: {'hwid': 'USB VID:PID=2341:0042'}
+# swift = Swift()
 print('sleep 2 sec ...')
 sleep(2)
 print('device info: ')
@@ -40,7 +40,7 @@ sleep(4)
 # 上升到最高点
 swift.set_position(x=152, y=0, speed=1800, wait=True)
 sleep(2)
-swift.set_position(x=152, y=81, z=148, speed=1800, wait=True)
+swift.set_position(x=152, y=81, z=118, speed=1800, wait=True)
 sleep(2)
 
 #
@@ -49,8 +49,8 @@ cap = cv2.VideoCapture(0)
 
 # 画线
 def draw_line_rectangle(frame, margin, polar, position):  # TODO 自己计算斜率，x/y
-    print('polar:rotation, stretch, height', polar, '倾斜角度', polar['rotation'])
-    print('position', position, position['x'] / position['y'], position['y'] / position['x'])
+    # print('polar:rotation, stretch, height', polar, '倾斜角度', polar['rotation'])
+    # print('position', position, position['x'] / position['y'], position['y'] / position['x'])
     rows, cols, ch = frame.shape  # (720, 1280, 3)
     half_v = int(cols / 2)
     half_h = int(rows / 2)
@@ -118,26 +118,27 @@ cv2.waitKey(1000)
 postive = False
 margin = 40
 while cap.isOpened():
-    print('waitKey(50)')
+    # print('waitKey(50)')
     key = cv2.waitKey(50)
     if key == ord("q"):
         break
     # _thread.start_new_thread(is_move, ())
 
-    if not swift.get_is_moving2():  # 阻塞线程
-        # if is_moving is False:
+    # if not swift.get_is_moving2():  # 阻塞线程
+    # if not swift.get_is_moving():
+    if is_moving is False:
         is_moving = True
         if postive is False:
             print('-71')
-            swift.set_position(x=102, y=-71, z=118, speed=1800, wait=False)
-            # _thread.start_new_thread(move_thread, (132, -71, 118, 1800, True))
+            # swift.set_position(x=102, y=-81, z=118, speed=1800, wait=False)
+            _thread.start_new_thread(move_thread, (142, -71, 128, 1800, True))
             postive = True
 
         else:
             print('71')
-            swift.set_position(x=132, y=71, z=108, speed=1800, wait=False)
+            # swift.set_position(x=132, y=71, z=108, speed=1800, wait=False)
             # _thread.start_new_thread(move_thread, (92, 50, 158, 1800, True))
-            # _thread.start_new_thread(move_thread, (132, 71, 108, 1800, True))
+            _thread.start_new_thread(move_thread, (142, 71, 128, 1800, True))
             postive = False
             #
 
@@ -160,18 +161,23 @@ while cap.isOpened():
 
     # 极坐标 #阻碍？
     # polar = swift.get_polar()
-    polar = swift.polar
-    position = swift.position
+    # polar = swift.polar
+    # position = swift.position
     # _thread.start_new_thread(get_polar, ())
     # polar = [1, 2, 3]
+    # position = [1, 2, 3]
+    position = {'x': 0, 'y': 0, 'z': 0}
+    polar = {'rotation': 0, 'stretch': 0, 'height': 0}
     draw_line_rectangle(frame, margin, polar, position)
     cv2.imshow('frame', frame)
 
 cv2.destroyAllWindows()
 
 # 重置
-# swift.set_position(z=80, wait=True)
-# swift.set_position(x=103, y=0, z=42, wait=True)
 print('重置机械臂')
 swift.set_buzzer()
-swift.reset(x=103, y=0, z=42, speed=800)
+swift.set_position(z=80, wait=True)
+swift.set_position(x=103, y=0, z=42, wait=True)
+# swift.reset(x=103, y=0, z=42, speed=800)
+
+sleep(5)
