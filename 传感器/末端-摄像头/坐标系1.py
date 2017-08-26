@@ -40,7 +40,7 @@ sleep(4)
 # 上升到最高点
 swift.set_position(x=152, y=0, speed=1800, wait=True)
 sleep(2)
-swift.set_position(x=152, y=81, z=118, speed=1800, wait=True)
+swift.set_position(x=152, y=81, z=118, speed=1900, wait=True)
 sleep(2)
 
 #
@@ -81,7 +81,7 @@ def move_thread(x, y, z, speed, wait=False):
     global is_moving
     is_moving = True
     # swift.set_position(x=x, y=y, z=z, speed=1000, wait=True)
-    ret = swift.set_position(x=x, y=y, z=z, speed=1000, wait=True)
+    ret = swift.set_position(x=x, y=y, z=z, speed=2000, wait=True)
     if ret is False:
         raise Exception(f'set_position错误x{x}y{y}z{z}')
     # sleep(2)
