@@ -34,6 +34,7 @@ swift.set_buzzer()
 
 
 def set_speed(speed=1800):
+    print('速度：', speed)
     swift.set_position(x=152, y=0, z=10, speed=speed, wait=True)
     swift.set_position(x=152, y=130, z=118, speed=speed, wait=True)
     swift.set_position(x=152, y=-130, z=118, speed=speed, wait=True)
@@ -46,10 +47,13 @@ def set_speed(speed=1800):
 # set_speed(2200)
 # set_speed(2500)
 # set_speed(2800)
+#
+set_speed(10000)
+set_speed(20000)
+set_speed(30000)
 
-for s in range(2000,30001,2000):#最高可设计30000
-    print('速度：',s)
-    set_speed(s)
+# for s in range(2000,30001,2000):#最高可设计30000
+#     set_speed(s)
 
 print('重置机械臂')
 swift.set_buzzer()
