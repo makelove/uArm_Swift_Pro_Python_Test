@@ -11,6 +11,7 @@
 from time import sleep
 from uf.wrapper.swift_api import SwiftAPI
 from uf.utils.log import *
+from time import time
 
 logger_init(logging.VERBOSE)
 # logger_init(logging.DEBUG)
@@ -35,23 +36,27 @@ swift.set_buzzer()
 
 def set_speed(speed=1800):
     print('速度：', speed)
+    t1 = time()
     swift.set_position(x=152, y=0, z=10, speed=speed, wait=True)
     swift.set_position(x=152, y=130, z=118, speed=speed, wait=True)
     swift.set_position(x=152, y=-130, z=118, speed=speed, wait=True)
+    t2 = time()
+
     swift.set_buzzer()
-    print('finished')
+    print('finished,所需时间:',t2-t1,'秒')
 
 
-# set_speed()
+set_speed()
 # set_speed(2000)
 # set_speed(2200)
 # set_speed(2500)
-# set_speed(2800)
+set_speed(2800)
 #
 set_speed(10000)
 set_speed(20000)
-set_speed(30000)
+set_speed(30000)#的确快了很多,比默认速度快了4.2倍
 
+#速度变化不是很明显
 # for s in range(2000,30001,2000):#最高可设计30000
 #     set_speed(s)
 
