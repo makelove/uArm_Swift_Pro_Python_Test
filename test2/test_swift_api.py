@@ -15,9 +15,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from uf.wrapper.swift_api import SwiftAPI
 from uf.utils.log import *
 
-# logger_init(logging.VERBOSE)
+logger_init(logging.VERBOSE)
 # logger_init(logging.DEBUG)
-logger_init(logging.INFO)
+# logger_init(logging.INFO)
 
 print('setup swift ...')
 
