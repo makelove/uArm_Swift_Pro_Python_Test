@@ -32,12 +32,12 @@ print('device info: ')
 print(swift.get_device_info())
 
 print('\nset X350 Y0 Z50 F500 ...')
-swift.set_position(150, 0, 150, speed=1500,wait=True)
+swift.set_position(200, 0, 150, speed=1500,wait=True)
 
 swift.set_buzzer()
 sleep(2)
 
-for i in range(3):
+for i in range(1):#3
     swift.set_position(z=109, speed=1500,wait=True)
     swift.set_buzzer()
     sleep(1)
@@ -45,7 +45,7 @@ for i in range(3):
     sleep(2)
 
 print('done ...')
-swift.reset()
+swift.reset(z=200)
 try:
     while True:
         sleep(1)
