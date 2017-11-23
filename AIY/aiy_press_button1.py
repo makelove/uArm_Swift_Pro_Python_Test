@@ -7,6 +7,7 @@
 """
 aiy_press_button1.py:
 """
+import subprocess
 
 import sys, os
 from time import sleep
@@ -30,18 +31,27 @@ sleep(2)
 
 print('device info: ')
 print(swift.get_device_info())
-
+sleep(2)
 print('\nset X350 Y0 Z50 F500 ...')
-swift.set_position(200, 0, 150, speed=1500,wait=True)
+swift.set_position(250, -50, 150,wait=True)
+sleep(2)
+print('\nset X350 Y0 Z50 F500 ...')
+swift.set_position(x=200, y=0, z=150, wait=True)
 
 swift.set_buzzer()
 sleep(2)
 
 for i in range(1):#3
-    swift.set_position(z=109, speed=1500,wait=True)
+    swift.set_position(x=200,y=0,z=109,wait=True)
     swift.set_buzzer()
+
+
+    # subprocess.call(['say', 'good morning,how are you'])
+    subprocess.call(['say', 'sing happy birthday'])
+
     sleep(1)
-    swift.set_position(z=120, speed=1500, wait=True)
+    swift.set_position(z=140, wait=True)
+
     sleep(2)
 
 print('done ...')
@@ -52,5 +62,5 @@ try:
 except KeyboardInterrupt as e:
     print('KeyboardInterrupt', e)
 finally:
-    # print('ret5: ' + test_ports['swift_service']['handle'].call('set cmd_sync G0 X80 Y0 Z60'))
-    swift.set_position(x=80, y=0, z=60, speed=1800, wait=True)
+    swift.reset()
+    # swift.set_position(x=90, y=0, z=70, speed=1800, wait=True)
