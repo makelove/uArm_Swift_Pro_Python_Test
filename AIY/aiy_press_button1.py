@@ -12,6 +12,15 @@ import subprocess
 import sys, os
 from time import sleep
 
+#
+say_list=[
+"tell me a joke",
+"Tell me a scary story",
+"make me laugh",
+"tell me about Thanksgiving",
+"Sing a song",
+"play little apple"]
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from uf.wrapper.swift_api import SwiftAPI
@@ -33,26 +42,28 @@ print('device info: ')
 print(swift.get_device_info())
 sleep(2)
 print('\nset X350 Y0 Z50 F500 ...')
-swift.set_position(250, -50, 150,wait=True)
+swift.set_position(150, -100, 150,wait=True)
 sleep(2)
 print('\nset X350 Y0 Z50 F500 ...')
-swift.set_position(x=200, y=0, z=150, wait=True)
+swift.set_position(x=280, y=0, z=140, wait=True)
 
 swift.set_buzzer()
 sleep(2)
 
-for i in range(1):#3
-    swift.set_position(x=200,y=0,z=109,wait=True)
+# for i in range(1):#3
+for words in say_list:#3
+    swift.set_position(x=280,y=0,z=109,wait=True)
     swift.set_buzzer()
 
 
     # subprocess.call(['say', 'good morning,how are you'])
-    subprocess.call(['say', 'sing happy birthday'])
+    # subprocess.call(['say', 'sing happy birthday'])
+    subprocess.call(['say', words])
 
-    sleep(1)
+    # sleep(1)
     swift.set_position(z=140, wait=True)
 
-    sleep(2)
+    sleep(15)
 
 print('done ...')
 swift.reset(z=200)
