@@ -1,0 +1,68 @@
+/Users/play/.py3/bin/python3.6 /Users/play/github/uArm_Swift_Pro_Python_Test/test2/test_api2.py
+setup swift ...
+swift/serial_ascii: INFO: choose device: /dev/cu.usbmodem1411
+swift/serial_ascii: INFO: /dev/cu.usbmodem1411:
+swift/serial_ascii: INFO:   hwid        : "USB VID:PID=2341:0042 LOCATION=20-1"
+swift/serial_ascii: INFO:   manufacturer: "Arduino (www.arduino.cc)"
+swift/serial_ascii: INFO:   product     : "Arduino Mega 2560"
+swift/serial_ascii: INFO:   description : "Arduino Mega 2560"
+sleep 2 sec ...
+swift/serial_ascii: VERBOSE: -> start
+swift/serial_ascii: VERBOSE: -> echo:Marlin 1.1.0-RC7
+swift/serial_ascii: VERBOSE: -> echo: Last Updated: 2016-07-31 12:00 | Author: (none, default config)
+swift/serial_ascii: VERBOSE: -> Compiled: Oct 25 2017
+swift/serial_ascii: VERBOSE: -> echo: Free Memory: 2376  PlannerBufferBytes: 924
+swift/serial_ascii: VERBOSE: -> echo:Hardcoded Default Settings Loaded
+swift/serial_ascii: VERBOSE: -> echo:Steps per unit:
+swift/serial_ascii: VERBOSE: -> echo:  M92 X320.00 Y320.00 Z320.00 E84.88
+swift/serial_ascii: VERBOSE: -> echo:Maximum feedrates (mm/s):
+swift/serial_ascii: VERBOSE: -> echo:  M203 X2000.00 Y2000.00 Z2000.00 E25.00
+swift/serial_ascii: VERBOSE: -> echo:Maximum Acceleration (mm/s2):
+swift/serial_ascii: VERBOSE: -> echo:  M201 X2000 Y2000 Z2000 E10000
+swift/serial_ascii: VERBOSE: -> echo:Accelerations: P=printing, R=retract and T=travel
+swift/serial_ascii: VERBOSE: -> echo:  M204 P25.00 R25.00 T100.00
+swift/serial_ascii: VERBOSE: -> echo:Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), X=maximum XY jerk (mm/s),  Z=maximum Z jerk (mm/s),  E=maximum E jerk (mm/s)
+swift/serial_ascii: VERBOSE: -> echo:  M205 S0.00 T0.00 B20000 X1.00 Z1.00 E5.00
+swift/serial_ascii: VERBOSE: -> echo:Home offset (mm)
+swift/serial_ascii: VERBOSE: -> echo:  M206 X0.00 Y0.00 Z0.00
+swift/serial_ascii: VERBOSE: -> echo:PID settings:
+swift/serial_ascii: VERBOSE: -> echo:  M301 P22.20 I1.08 D114.00
+swift/serial_ascii: VERBOSE: -> echo:Filament settings: Disabled
+swift/serial_ascii: VERBOSE: -> echo:  M200 D1.75
+swift/serial_ascii: VERBOSE: -> echo:  M200 D0
+device info:
+swift/serial_ascii: VERBOSE: <- #1 P2201
+swift/serial_ascii: VERBOSE: -> $1 ok VSwiftPro
+swift/serial_ascii: VERBOSE: <- #2 P2202
+swift/serial_ascii: VERBOSE: -> $2 ok V3.3.0
+swift/serial_ascii: VERBOSE: <- #3 P2203
+swift/serial_ascii: VERBOSE: -> $3 ok V3.2.0
+swift/serial_ascii: VERBOSE: <- #4 P2204
+swift/serial_ascii: VERBOSE: -> $4 ok V3.2.0
+swift/serial_ascii: VERBOSE: <- #5 P2205
+swift/serial_ascii: VERBOSE: -> $5 ok V508CB17684DE
+swift/serial_ascii: VERBOSE: <- #6 G0 X300
+['SwiftPro', '3.3.0', '3.2.0', '3.2.0', '508CB17684DE']
+swift/serial_ascii: VERBOSE: -> @5 V1
+swift/ptc_ascii: VERBOSE: report: @5 V1
+swift/serial_ascii: VERBOSE: -> $6 ok
+swift/serial_ascii: VERBOSE: <- #7 G0 X200 Y100 Z50
+finished
+swift/serial_ascii: VERBOSE: -> $7 ok
+swift/serial_ascii: VERBOSE: <- #8 M17
+KeyboardInterrupt
+swift/serial_ascii: VERBOSE: <- #9 G0 X150 Y0 Z150 F200
+swift/serial_ascii: VERBOSE: -> $8 ok
+swift/serial_ascii: VERBOSE: -> $9 ok
+swift/pump: DEBUG: set value: off
+swift/serial_ascii: VERBOSE: <- #10 M2231 V0
+swift/serial_ascii: VERBOSE: -> $10 ok
+swift/serial_ascii: VERBOSE: <- #11 P2231
+swift/serial_ascii: VERBOSE: -> $11 ok V0
+swift/gripper: DEBUG: set value: off
+swift/serial_ascii: VERBOSE: <- #12 M2232 V0
+swift/serial_ascii: VERBOSE: -> $12 ok
+swift/serial_ascii: VERBOSE: <- #13 P2232
+swift/serial_ascii: VERBOSE: -> $13 ok V0
+
+Process finished with exit code 0
