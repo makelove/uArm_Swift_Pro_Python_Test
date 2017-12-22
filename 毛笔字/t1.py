@@ -27,7 +27,7 @@ print('device info: ')
 print(swift.get_device_info())
 sleep(2)
 # swift.reset()
-swift.set_position(x=200, wait=True)
+swift.set_position(x=300, wait=True)
 sleep(3)
 print(swift.get_position())
 sleep(3)
@@ -35,24 +35,31 @@ swift.set_position(y=0, wait=True)
 sleep(3)
 
 # swift.set_position(x=200,y=0, z=45, wait=True)
-swift.set_position(z=45, wait=True)
+swift.set_position(z=85, wait=True)
 sleep(2)
-for x in range(0, 180):
+for x in range(0, 180,30):
     swift.set_wrist(angle=x, wait=True)
     sleep(0.2)
+swift.set_wrist(angle=90, wait=True)
 swift.set_buzzer()
 sleep(2)
-swift.set_position(x=200, y=0, z=50, wait=True)
+swift.set_position(x=300, y=0, z=110, wait=True)
 
 #
-swift.set_position(x=230, y=0, z=45, wait=True)
+swift.set_position(x=330, y=0, z=85, wait=True)
 sleep(2)
-for x in range(0, 180):
+for x in range(0, 180,30):
     swift.set_wrist(angle=x, wait=True)
     sleep(0.2)
+swift.set_wrist(angle=90, wait=True)
 swift.set_buzzer()
 sleep(2)
 
-swift.reset()
-while True:
-    sleep(1)
+print('finished')
+try:
+    while True:
+        sleep(1)
+except KeyboardInterrupt as e:
+    print('KeyboardInterrupt',e)
+finally:
+    swift.reset()
